@@ -6,7 +6,7 @@ $version = "v2.5.5";
 error_reporting(E_ERROR);
 $master = file_get_contents('/srv/rutorrent/home/db/master.txt');
 $master=preg_replace('/\s+/', '', $master);
-$username = getUser();
+$username = escapeshellarg(getUser());
 
 require_once ($_SERVER['DOCUMENT_ROOT'].'/inc/localize.php');
 
@@ -406,7 +406,7 @@ break;
 
 /* enable & start services */
 case 66:
-  $process = $_GET['serviceenable'];
+  $process = escapeshellarg($_GET['serviceenable']);
     if ($process == "resilio-sync"){
       shell_exec("sudo systemctl enable $process");
       shell_exec("sudo systemctl start $process");
@@ -455,7 +455,7 @@ break;
 
 /* disable & stop services */
 case 77:
-  $process = $_GET['servicedisable'];
+  $process = escapeshellarg($_GET['servicedisable']);
     if ($process == "resilio-sync"){
       shell_exec("sudo systemctl stop $process");
       shell_exec("sudo systemctl disable $process");
@@ -504,7 +504,7 @@ break;
 
 /* restart services */
 case 88:
-  $process = $_GET['servicestart'];
+  $process = escapeshellarg($_GET['servicestart']);
     if ($process == "resilio-sync"){
       shell_exec("sudo systemctl enable $process");
       shell_exec("sudo systemctl restart $process");
